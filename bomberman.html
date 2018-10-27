@@ -1,0 +1,803 @@
+﻿<!DOCTYPE html>
+<!-- saved from url=(0051)http://noobtuts.com/unity/2d-bomberman-game_PREMIUM -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>noobtuts - Unity 2D Bomberman Game Tutorial</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1">
+  <meta name="description" content="noobtuts.com - Talk to me like I&#39;m five!">
+  <meta name="keywords" content="noobtuts, gamedevelopment, tutorials, make a game">
+  <meta name="robots" content="index, follow">
+  <link rel="stylesheet" href="http://noobtuts.com/assets/styles/styles.css">
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  
+    ga('create', 'UA-36008404-2', 'noobtuts.com');
+    ga('send', 'pageview');  
+  </script><style type="text/css"></style>
+</head>
+
+<body>
+  <header>
+    <h1><a href="http://noobtuts.com/"><img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/logo.png" alt="noobtuts"></a></h1>
+  </header><!-- vis2k: nav not working in older IE versions
+<nav class="menu">
+-->
+<div id="menu">
+  <ul>
+        <li><a href="http://noobtuts.com/">Tutorials</a></li>
+        <li><a href="http://noobtuts.com/articles">Articles</a></li>
+        <li><a href="http://noobtuts.com/premium">Premium</a></li>
+        <li><a href="http://noobtuts.com/about">About</a></li>
+      </ul>
+</div>
+<!-- vis2k: nav not working in older IE versions
+</nav>
+-->
+
+<section class="content">
+
+  <article>
+    <h1>Unity 2D Bomberman Game Tutorial</h1>
+    <p><img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/bomberman_preview.gif" title="bomberman_preview" alt="Bomberman Preview"><br>
+In this Tutorial we will make a clone of one of the most fun games of all time - Bomberman. We will only write about 80 lines of code and everything will be explained as easy as possible so everyone can understand it.</p>
+
+<h2>Foreword</h2>
+
+<p>Our 2D Bomberman game will be inspired by the <a href="http://en.wikipedia.org/wiki/Bomberman_%28video_game%29" rel="noreferrer">original Bomberman</a> from 1983. What sounds like a really old game, is still a phenomenal example of fun gameplay.</p>
+
+<p>We will use several interesting Unity features such as Rigidbodies, Colliders and the Sprite Editor. We will also learn how to properly use Unity's incredibly powerful Mecanim Animation System.</p>
+
+<h2>Requirements</h2>
+
+<h3>Knowledge</h3>
+
+<p>While this Tutorial will be explained as easy as possible, a basic overview about Unity <em>(especially the 2D features)</em> is a good thing to bring with you. If you are completely new to Unity then feel free to read through our easier <a href="http://noobtuts.com/unity">Unity Tutorials</a> like <a href="http://noobtuts.com/unity/2d-pong-game">Unity 2D Pong Game</a> first.</p>
+
+<p>If you already know where to find the Hierarchy, how to use the Inspector and what a Transform is then there isn't anything to be scared of. As usual we only use the techniques that are completely easy to understand, without any scary math.</p>
+
+<h3>Unity Version</h3>
+
+<p>Our Bomberman Tutorial will use <strong>Unity 5.0.1f1</strong>. Newer versions should work fine as well, older versions may or may not work. The free version of Unity 5 now comes with all the engine features, which makes it the recommended version.</p>
+
+<h2>Creating the Project</h2>
+
+<h2>Project Setup</h2>
+
+<p>Let's get to it. We will start Unity and select <strong>New Project</strong>:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/new_project.png" title="new_project" alt="Unity New Project"></p>
+
+<p>We will name it <strong>bomberman</strong>, select any location like <strong>C:\</strong>, select <strong>2D</strong> and click <strong>Create Project</strong>:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/project_wizard_create_2d.png" title="project_wizard_create_2d" alt="Unity Create new 2D Project"></p>
+
+<h2>The Background Color</h2>
+
+<p>Afterwards we select the <strong>Main Camera</strong> in the <strong>Hierarchy</strong>, look at the Inspector and change the <strong>Background</strong> color. The original Bomberman game uses the green background color <strong><font color="#397c00">#397c00</font></strong> <em>(R=57, G=124, B=0)</em>. We can use that color, or any other color that we like. We will also adjust the <strong>Size</strong> property so that the game looks big enough later on:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/camera_properties.png" title="camera_properties" alt="Unity Camera Properties"></p>
+
+<h2>Creating the Level</h2>
+
+<h3>The Undestroyable Block</h3>
+
+<p>We will have several types of blocks in our game. At first, we will need one block that can't be destroyed. We will create a 32 x 32 px texture with a tool like <a href="http://www.getpaint.net/" rel="noreferrer">Paint.NET</a>:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/block_undestroyable.png" title="block_undestroyable" alt="Undestroyable Block Texture"><br>
+<em>Note: right click on the image, select <strong>Save As...</strong>, navigate to the project's <strong>Assets</strong> folder and save it in a new <strong>Sprites</strong> folder.</em></p>
+
+<p>Alright, let's select it in our <strong>Project Area</strong>:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/block_undestroyable_projectarea.png" title="block_undestroyable_projectarea" alt="Undestroyable Block in Project Area"></p>
+
+<p>And then take a look at the <strong>Inspector</strong>, where we can modify the Block's <strong>Import Settings</strong>:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/block_undestroyable_importsettings.png" title="block_undestroyable_importsettings" alt="Undestroyable Block Import Settings"><br>
+<em>Note: a <strong>Pixels Per Unit</strong> value of <strong>32</strong> means that 32 x 32 pixels will fit into one unit in the game world. We will use this value for all our textures, because Bomberman will be 32 x 32 px later on, and we want him to be exactly one unit in the game world.</em></p>
+
+<p>Afterwards we can drag the block image from the <strong>Project Area</strong> into the <strong>Hierarchy</strong>:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/block_undestroyable_to_hierarchy.png" title="block_undestroyable_to_hierarchy" alt="Drag undestroyable Block to Hierarchy"></p>
+
+<p>Now we can even see it in the game if we press <strong>Play</strong>:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/block_undestroyable_ingame.png" title="block_undestroyable_ingame" alt="Undestroyable Block ingame"></p>
+
+<h3>Block Physics</h3>
+
+<p>Right now the Block is just a image in the game world, a purely visual effect and nothing more. We want it to be part of the physics world, so that Bomberman can't walk through it. We can make it part of the physics world by selecting <strong>Add Component</strong>-&gt;<strong>Physics 2D</strong>-&gt;<strong>Box Collider 2D</strong> in the <strong>Inspector</strong>:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/block_undestroyable_collider.png" title="block_undestroyable_collider" alt="Undestroyable Block with Collider"></p>
+
+<p>Now the Block is part of the physics world, just like a wall.</p>
+
+<p>There is one more thing to do here. We will have two types of blocks in our game: destroyable and undestroyable blocks. We need a way to find out if a certain block is destroyable or not. There are a lot of ways to do this, like writing a Script or using a Tag. We will keep things simple and use the <strong>Static</strong> property for things that are not destroyable:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/block_undestroyable_static.png" title="block_undestroyable_static" alt="Undestroyable Block static"><br>
+<em>Note: we usually use the <strong>Static</strong> property to tell Unity that certain GameObjects will never change. This way Unity can do optimizations with them. And since our undestroyable block will never change, making it static is just the way to go.</em></p>
+
+<h3>The Destroyable Block</h3>
+
+<p>Alright so let's add another block to our game. Like before, we will begin by drawing one:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/block_destroyable.png" title="block_destroyable" alt="Destroyable Block Texture"><br>
+<em>Note: right click on the image, select <strong>Save As...</strong> and save it in the project's <strong>Assets/Sprites</strong> folder.</em></p>
+
+<p>We will use the following <strong>Import Settings</strong> for it:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/block_destroyable_importsettings.png" title="block_destroyable_importsettings" alt="Destroyable Block Import Settings"></p>
+
+<p>Afterwards we will drag it into the <strong>Hierarchy</strong> again and then select <strong>Add Component</strong>-&gt;<strong>Physics 2D</strong>-&gt;<strong>Box Collider 2D</strong> in the <strong>Inspector</strong>:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/block_destroyable_collider.png" title="block_destroyable_collider" alt="Destroyable Block Collider"></p>
+
+<h3>Using the Blocks to create a Level</h3>
+
+<p>Now we can use our two blocks to create a simple level. We can duplicate a block by right clicking it in the <strong>Hierarchy</strong> and then selecting <strong>Duplicate</strong>:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/block_undestroyable_duplicate.png" title="block_undestroyable_duplicate" alt="Duplicate undestroyable Block"></p>
+
+<p>We can duplicate the blocks as often as we want and position them to create a simple level. We just have to remember to position each block at rounded coordinates like <strong>(1, 2)</strong> instead of something like <strong>(1.002, 1.9998)</strong>.</p>
+
+<p>Here is what a full level can look like:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/blocks_all.png" title="blocks_all" alt="All Blocks positioned"><br>
+<em>Note: we also grouped all the Blocks into an empty <strong>blocks</strong> GameObject which we can create in the top menu at <strong>GameObject</strong>-&gt;<strong>Create Empty</strong>. But this is optional, as it's just to keep our Hierarchy a bit more clean.</em></p>
+
+<h2>The Bomberman Character</h2>
+
+<p>Alright, let's create our Bomberman character. Our character will be able to stand idle, move to the left, to the right, up and down. We will need 5 animations to make this possible. Sounds like it will be a lot of work, but as usual Unity takes care of all the complicated stuff for us.</p>
+
+<h3>Animation Format</h3>
+
+<p>Our animations won't be 'real' animations like those that we use when making 3D games. Instead we will make a few pictures of our Bomberman where he is in different poses. We then play those pictures in a loop to achieve the animation effect. We will need the following pictures:</p>
+
+<ul>
+<li><strong>Walk Left</strong> <em>(2 of them so it looks animated)</em></li>
+<li><strong>Walk Right</strong> <em>(2 of them so it looks animated)</em></li>
+<li><strong>Walk Up</strong> <em>(2 of them so it looks animated)</em></li>
+<li><strong>Walk Down</strong> <em>(2 of them so it looks animated)</em></li>
+<li><strong>Idle</strong> <em>(2 of them that are identical [reason follows below])</em></li>
+</ul>
+
+<p>Each picture will be really small, like 32 x 32 px. We can put all animations into one image so we don't lose the overview. There is no magic in creating and animating 2D characters, everyone can do it. It just takes a drawing tool, a mouse, a few colors and some patience.</p>
+
+<p>Here is the Bomberman that we will use in this Tutorial:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/bomberman.png" title="bomberman" alt="Bomberman Animations"><br>
+<em>Note: right click on the image, select <strong>Save As...</strong> and save it in the project's <strong>Assets/Sprites</strong> folder.</em></p>
+
+<p>We will use the following <strong>Import Settings</strong> for it:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/bomberman_importsettings.png" title="bomberman_importsettings" alt="Bomberman Import Settings"></p>
+
+<h3>Slicing the Image</h3>
+
+<p>Selecting <strong>Multiple</strong> at <strong>Sprite Mode</strong> is what tells Unity that our image actually contains several smaller images of Bomberman in different poses. The other settings are just to make it look as good as possible.</p>
+
+<p>Now that we selected <strong>Multiple</strong> we can open the <strong>Sprite Editor</strong> by clicking the Button in the Inspector:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/spriteeditor_button.png" title="spriteeditor_button" alt="Unity Sprite Editor Button"></p>
+
+<p>After clicking the <strong>Slice</strong> button, the slice window appears where we select the following settings:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/bomberman_slicing.png" title="bomberman_slicing" alt="Bomberman Slicing"></p>
+
+<p>Unity will then slice our image after pressing the <strong>Slice Button</strong>:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/bomberman_sliced.png" title="bomberman_sliced" alt="Bomberman sliced"></p>
+
+<p>Finally we press the <strong>Apply</strong> button at the top right:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/bomberman_slicing_apply.png" title="bomberman_slicing_apply" alt="Apply Bomberman Slicing"></p>
+
+<p>If we close the <strong>Sprite Editor</strong> and look into the <strong>Project Area</strong>, then we can see how our bomberman image now has 10 child images, which are those slices:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/bomberman_slices_projectarea.png" title="bomberman_slices_projectarea" alt="Bomberman Slices in Project Area"></p>
+
+<h3>Creating the Animations</h3>
+
+<p>Okay so now that we have the slices, it's time for us to create the animations. Let's select the first two slices that are our WalkLeft animation and then drag them into the Scene:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/bomberman_slices_into_scene.png" title="bomberman_slices_into_scene" alt="Drag Bomberman Slices into Scene"></p>
+
+<p>Unity will then realize that we want to create an animation and asks us for a name and a place to save it. Let's create a new <strong>BombermanAnimation</strong> folder inside our <strong>Assets</strong> folder and then save the animation as <strong>WalkLeft.anim</strong>.</p>
+
+<p>We will repeat this process for the <strong>WalkRight</strong> <em>(Slice bomberman_2 and bomberman_3)</em>, <strong>WalkDown</strong> <em>(Slice bomberman_4 and bomberman_5)</em>, <strong>WalkUp</strong> <em>(Slice bomberman_6 and bomberman_7)</em> and <strong>Idle</strong> <em>(Slice bomberman_8 and bomberman_9)</em> animations.</p>
+
+<p><em>Note: this is the reason why the two idle slices look exactly the same. We can't create an animation from just one slice.</em></p>
+
+<p>If we press <strong>Play</strong> then we can see all of the animations that we just dragged into the Scene:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/bman_animations_all.gif" title="bman_animations_all" alt="All Bomberman Animations in the Scene"></p>
+
+<h3>Cleaning up after Unity</h3>
+
+<p>Dragging all that stuff into the Scene created several animation files for us in the <strong>BombermanAnimation</strong> folder. But as we will see soon, we always need a <strong>GameObject</strong> in the Hierarchy and a <strong>Controller</strong> in the animation folder as well.</p>
+
+<p>Of course, Unity automatically creates the GameObject and the Controller as soon as we create an animation. But since we created 5 animations, it also created 5 GameObjects and 5 Controllers for us.</p>
+
+<p>So let's take a look at the <strong>Hierarchy</strong> and delete 4 of those 5 GameObjects by first selecting them and then right clicking and choosing <strong>Delete</strong>:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/bomberman_hierarchy_delete.png" title="bomberman_hierarchy_delete" alt="Delete Bomberman in Hierarchy"></p>
+
+<p>Afterwards we select <strong>bomerman_0</strong> and rename it to <strong>Bomberman</strong> <em>(right click it in the Hierarchy and select Rename, or press F2)</em>. Now our Hierarchy is clean again:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/bomberman_hierarchy_clean.png" title="bomberman_hierarchy_clean" alt="Bomberman in Hierarchy clean"></p>
+
+<p>Okay so as mentioned before we do need a controller, but we don't need 5 of them. So let's take a look at our <strong>BombermanAnimation</strong> folder and delete the 4 controllers too:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/bomberman_projectarea_delete_before.png" title="bomberman_projectarea_delete_before" alt="Bomberman in Project Area before Deletion"></p>
+
+<p>Now we have 5 animations and 1 controller in our <strong>BombermanAnimation</strong> folder:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/bomberman_projectarea_delete_after.png" title="bomberman_projectarea_delete_after" alt="Bomberman in Project Area after Deletion"></p>
+
+<h3>Animation Controller - Parameter</h3>
+
+<p>Let's double click the <strong>bomberman_0</strong> file in our <strong>BombermanAnimation</strong> folder so that we can see it in the <strong>Animator</strong>:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/bomberman_animator.png" title="bomberman_animator" alt="Bomberman Animator"></p>
+
+<p>Time for some more Unity magic...</p>
+
+<p>What we see here is the state machine that controls the bomberman animation. It will <strong>automatically</strong> switch between different animations like <strong>Idle</strong>, <strong>WalkUp</strong> and <strong>WalkDown</strong>, depending on a certain parameter that we pass to it.</p>
+
+<p>For us, that parameter will be Bomberman's current movement <strong>Direction</strong>. The movement direction will be of type Vector2 and the following image shows some possible movement directions:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/vector2_directions.png" title="vector2_directions" alt="Vector2 Directions"></p>
+
+<p>If we assume that Bomberman only walks horizontal or vertical and never diagonal, then:</p>
+
+<ul>
+<li><strong>Y&gt;0</strong> means <strong>WalkUp</strong></li>
+<li><strong>Y&lt;0</strong> means <strong>WalkDown</strong></li>
+<li><strong>X&gt;0</strong> means <strong>WalkRight</strong></li>
+<li><strong>X&lt;0</strong> means <strong>WalkLeft</strong></li>
+<li><strong>X=0 and Y=0</strong> means <strong>Idle</strong></li>
+</ul>
+
+<p>We can create a new Parameter by first selecting the <strong>Parameters</strong> tab and then clicking the <strong>+</strong> on the right. We will add one parameter of type <strong>Int</strong> and name it <strong>X</strong> and another one of type <strong>Int</strong> that we will name <strong>Y</strong>:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/bomberman_direction_parameters.png" title="bomberman_direction_parameters" alt="Bomberman Direction Parameters"></p>
+
+<h3>Adding more States</h3>
+
+<p>Right now we only have the <strong>WalkLeft</strong> state in our animation state machine. Let's drag the <strong>WalkRight</strong>, <strong>WalkUp</strong>, <strong>WalkDown</strong> and <strong>Idle</strong> animation files from our <strong>BombermanAnimation</strong> folder into the animator:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/bomberman_animator_allstates.png" title="bomberman_animator_allstates" alt="Bomberman Animator with all States"></p>
+
+<h3>Creating Transitions</h3>
+
+<p>Now we have our 5 animation states all in here. The next step is to tell Unity when to transition between those states, depending on the parameter values. So for example, if <strong>X&lt;0</strong> then it should switch to the <strong>WalkLeft</strong> state.</p>
+
+<p>The obvious thing to do would be to add a Transition from WalkRight, WalkUp, WalkDown and Idle to WalkLeft, so that it automatically goes there if <strong>X&lt;0</strong>. This is quite a lot of work though, because we would need one transition from each state to each other state.</p>
+
+<p>As usual Unity makes our lives much easier here by providing the <strong>Any State</strong>, which literally stands for <strong>any</strong> state. So if we make a Transition from <strong>Any State</strong> to <strong>WalkLeft</strong>, then it's just as we made one from any state to <strong>WalkLeft</strong>. This will save us a lot of work.</p>
+
+<p>Let's right click the <strong>Any State</strong>, select <strong>Make Transition</strong> and drag the white arrow onto the <strong>WalkLeft</strong> state:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/bomberman_animator_firsttransition.png" title="bomberman_animator_firsttransition" alt="Bomberman Animator with first Transition"></p>
+
+<p>Now we can select the Transition <em>(the white arrow)</em> and then assign the following properties to it in the <strong>Inspector</strong>:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/bomberman_animator_firsttransition_inspector.png" title="bomberman_animator_firsttransition_inspector" alt="Bomberman Animator with first Transition in Inspector"><br>
+<em>Note: we disabled the <strong>Can Transition to Self</strong> property to avoid weird cases where the animation would restart over and over again. We then added the previously mentioned <strong>Condition</strong> that <strong>X&lt;0</strong>.</em></p>
+
+<p>Now the animation state machine will automatically switch to the <strong>WalkLeft</strong> state whenever the <strong>X</strong> parameter is less than <strong>0</strong>.</p>
+
+<p>Let's add a few more Transitions from <strong>Any State</strong> to:</p>
+
+<ul>
+<li><strong>WalkRight</strong> with the Condition <strong>X&gt;0</strong></li>
+<li><strong>WalkTop</strong> with the Condition <strong>Y&gt;0</strong></li>
+<li><strong>WalkDown</strong> with the Condition <strong>Y&lt;0</strong></li>
+<li><strong>Idle</strong> with the Conditions <strong>X=0</strong> and <strong>Y=0</strong><br>
+<em>Note: it's important that we also disable <strong>Can Transition to Self</strong> in all those Transitions.</em></li>
+</ul>
+
+<p>Here is our animation state machine afterwards:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/bomberman_animator_alltransitions.png" title="bomberman_animator_alltransitions" alt="Bomberman Animator with all Transitions"></p>
+
+<h3>The Animation Speed</h3>
+
+<p>There is one more adjustment to be made here. Let's select all the states once and then set their <strong>Speed</strong> property to <strong>0.4</strong>:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/bomberman_animator_speed.png" title="bomberman_animator_speed" alt="Bomberman Animator Speed"></p>
+
+<p>This way the animations won't be played too fast.</p>
+
+<h3>About Unity Animations</h3>
+
+<p>Our Bomberman animation state machine is finished. This process may look a bit confusing when doing it the first time, but if you ever tried to program your own state machine with transitions and animations from a sliced image then you will yet again realize how much of an achievement this system is. A few clicks and drags and drops is all it takes to animate just about any character.<br>
+<em>Note: we don't see the animation transitions in game just yet, but we will very soon.</em></p>
+
+<h3>Bomberman Physics</h3>
+
+<p>Our Bomberman should also be part of the physics world. Let's select it in the <strong>Hierarchy</strong> and then click <strong>Add Component</strong>-&gt;<strong>Physics 2D</strong>-&gt;<strong>Circle Collider 2D</strong> in the <strong>Inspector</strong>:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/bomberman_collider.png" title="bomberman_collider" alt="Bomberman Collider"><br>
+<em>Note: we selected a <strong>Circle Collider</strong> here because it's best practice. It allows for smoother movement and prevents Bomberman from getting stuck on sharp edges later. We also reduced the radius to <strong>0.45</strong> simply to give Unity's Physics some more space to work with.</em></p>
+
+<p>Every physics thing that should walk around the game world will need a Rigidbody. So this time we select <strong>Add Component</strong>-&gt;<strong>Physics 2D</strong>-&gt;<strong>Rigidbody 2D</strong>. We then disable rotations by enabling <strong>Fixed Angle</strong> and we disable gravity by setting the <strong>Gravity Scale</strong> to <strong>0</strong> in the Rigidbody properties:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/bomberman_rigidbody.png" title="bomberman_rigidbody" alt="Bomberman Rigidbody"><br>
+<em>Note: as rule of thumb, everything in the physics world that is supposed to move around will need a Rigidbody.</em></p>
+
+<h3>The Bomberman Movement</h3>
+
+<p>Alright let's keep going and make our Bomberman move. At first we will position our <strong>Bomberman</strong> GameObject somewhere at the top left of our level <em>(and not inside a block)</em>:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/bomberman_positioned.png" title="bomberman_positioned" alt="Bomberman positioned"></p>
+
+<p>Things like Movement are usually implemented with Scripting. We can add a Script to Bomberman by selecting <strong>Add Component</strong>-&gt;<strong>New Script</strong>:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/new_script.png" title="new_script" alt="New Script"></p>
+
+<p>We will name it <strong>Move</strong> and select <strong>CSharp</strong> as the language. Afterwards we will create a new <strong>Scripts</strong> folder in our <strong>Project Area</strong> and then move our Script into it:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/move_script_projectarea.png" title="move_script_projectarea" alt="Move Script in Project Area"></p>
+
+<p>Let's double click our Script in order to open it:<br>
+</p><pre class="highlight csharp" style="white-space: nowrap"><code><span class="csharp"><span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">UnityEngine</span><span style="color: #008000;">;</span><br>
+<span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">System.Collections</span><span style="color: #008000;">;</span><br>
+<br>
+<span style="color: #0600FF; font-weight: bold;">public</span> <span style="color: #6666cc; font-weight: bold;">class</span> Move <span style="color: #008000;">:</span> MonoBehaviour <span style="color: #008000;">{</span><br>
+<br>
+&nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// Use this for initialization</span><br>
+&nbsp; &nbsp; <span style="color: #6666cc; font-weight: bold;">void</span> Start <span style="color: #008000;">(</span><span style="color: #008000;">)</span> <span style="color: #008000;">{</span><br>
+&nbsp; &nbsp; <br>
+&nbsp; &nbsp; <span style="color: #008000;">}</span><br>
+&nbsp; &nbsp; <br>
+&nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// Update is called once per frame</span><br>
+&nbsp; &nbsp; <span style="color: #6666cc; font-weight: bold;">void</span> Update <span style="color: #008000;">(</span><span style="color: #008000;">)</span> <span style="color: #008000;">{</span><br>
+&nbsp; &nbsp; <br>
+&nbsp; &nbsp; <span style="color: #008000;">}</span><br>
+<span style="color: #008000;">}</span></span></code></pre><p></p>
+
+<p>We can remove the <strong>Start</strong> and the <strong>Update</strong> functions, because we won't need either of them. Instead we will use <strong>FixedUpdate</strong>. FixedUpdate is called in the same interval as Physics calculations are done, hence why we should always use <strong>FixedUpdate</strong> for physics stuff:<br>
+</p><pre class="highlight csharp" style="white-space: nowrap"><code><span class="csharp"><span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">UnityEngine</span><span style="color: #008000;">;</span><br>
+<span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">System.Collections</span><span style="color: #008000;">;</span><br>
+<br>
+<span style="color: #0600FF; font-weight: bold;">public</span> <span style="color: #6666cc; font-weight: bold;">class</span> Move <span style="color: #008000;">:</span> MonoBehaviour <span style="color: #008000;">{</span><br>
+<br>
+&nbsp; &nbsp; <span style="color: #6666cc; font-weight: bold;">void</span> FixedUpdate <span style="color: #008000;">(</span><span style="color: #008000;">)</span> <span style="color: #008000;">{</span><br>
+&nbsp; &nbsp; <br>
+&nbsp; &nbsp; <span style="color: #008000;">}</span><br>
+<span style="color: #008000;">}</span></span></code></pre><p></p>
+
+<p>There are several ways to check for input here. For example, we could just check if the user pressed the <strong>left</strong> or <strong>right arrow</strong> key and then do horizontal movement. Of course some users like to use the <strong>WSAD</strong> keys too, so we would also have to check for the <strong>A</strong> and <strong>D</strong> keys to do horizontal movement. Now some users might even use a gamepad, which means that we should check this too.</p>
+
+<p>As usual Unity makes our lives easy by providing the <a href="http://docs.unity3d.com/ScriptReference/Input.GetAxis.html">GetAxis</a> function which automatically checks all the horizontal <em>(or vertical)</em> keys and then returns a value between <strong>-1</strong> <em>(for left)</em> and <strong>1</strong> <em>(for right)</em>. Or <strong>0</strong> if nothing was pressed.</p>
+
+<p>Here is how we use it to check for all the horizontal and vertical key presses:<br>
+</p><pre class="highlight csharp" style="white-space: nowrap"><code><span class="csharp"><span style="color: #6666cc; font-weight: bold;">void</span> FixedUpdate <span style="color: #008000;">(</span><span style="color: #008000;">)</span> <span style="color: #008000;">{</span><br>
+&nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// Check Input Axes</span><br>
+&nbsp; &nbsp; <span style="color: #6666cc; font-weight: bold;">float</span> h <span style="color: #008000;">=</span> Input<span style="color: #008000;">.</span><span style="color: #0000FF;">GetAxisRaw</span><span style="color: #008000;">(</span><span style="color: #666666;">"Horizontal"</span><span style="color: #008000;">)</span><span style="color: #008000;">;</span><br>
+&nbsp; &nbsp; <span style="color: #6666cc; font-weight: bold;">float</span> v <span style="color: #008000;">=</span> Input<span style="color: #008000;">.</span><span style="color: #0000FF;">GetAxisRaw</span><span style="color: #008000;">(</span><span style="color: #666666;">"Vertical"</span><span style="color: #008000;">)</span><span style="color: #008000;">;</span><br>
+<span style="color: #008000;">}</span></span></code></pre><p></p>
+
+<p>Before we continue, let's add a <strong>speed</strong> variable really quick:<br>
+</p><pre class="highlight csharp" style="white-space: nowrap"><code><span class="csharp"><span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">UnityEngine</span><span style="color: #008000;">;</span><br>
+<span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">System.Collections</span><span style="color: #008000;">;</span><br>
+<br>
+<span style="color: #0600FF; font-weight: bold;">public</span> <span style="color: #6666cc; font-weight: bold;">class</span> Move <span style="color: #008000;">:</span> MonoBehaviour <span style="color: #008000;">{</span><br>
+&nbsp; &nbsp; <span style="color: #0600FF; font-weight: bold;">public</span> <span style="color: #6666cc; font-weight: bold;">float</span> speed <span style="color: #008000;">=</span> <span style="color: #FF0000;">6</span><span style="color: #008000;">;</span><br>
+<br>
+&nbsp; &nbsp; <span style="color: #6666cc; font-weight: bold;">void</span> FixedUpdate <span style="color: #008000;">(</span><span style="color: #008000;">)</span> <span style="color: #008000;">{</span><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// Check Input Axes</span><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #6666cc; font-weight: bold;">float</span> h <span style="color: #008000;">=</span> Input<span style="color: #008000;">.</span><span style="color: #0000FF;">GetAxisRaw</span><span style="color: #008000;">(</span><span style="color: #666666;">"Horizontal"</span><span style="color: #008000;">)</span><span style="color: #008000;">;</span><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #6666cc; font-weight: bold;">float</span> v <span style="color: #008000;">=</span> Input<span style="color: #008000;">.</span><span style="color: #0000FF;">GetAxisRaw</span><span style="color: #008000;">(</span><span style="color: #666666;">"Vertical"</span><span style="color: #008000;">)</span><span style="color: #008000;">;</span><br>
+&nbsp; &nbsp; <span style="color: #008000;">}</span><br>
+<span style="color: #008000;">}</span></span></code></pre><p></p>
+
+<p>We will use the Rigidbody's <strong>velocity</strong> property to move Bomberman. The velocity is always the movement <strong>direction</strong> multiplied by the <strong>speed</strong>:<br>
+</p><pre class="highlight csharp" style="white-space: nowrap"><code><span class="csharp"><span style="color: #6666cc; font-weight: bold;">void</span> FixedUpdate <span style="color: #008000;">(</span><span style="color: #008000;">)</span> <span style="color: #008000;">{</span><br>
+&nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// Check Input Axes, then use velocity</span><br>
+&nbsp; &nbsp; <span style="color: #6666cc; font-weight: bold;">float</span> h <span style="color: #008000;">=</span> Input<span style="color: #008000;">.</span><span style="color: #0000FF;">GetAxisRaw</span><span style="color: #008000;">(</span><span style="color: #666666;">"Horizontal"</span><span style="color: #008000;">)</span><span style="color: #008000;">;</span><br>
+&nbsp; &nbsp; <span style="color: #6666cc; font-weight: bold;">float</span> v <span style="color: #008000;">=</span> Input<span style="color: #008000;">.</span><span style="color: #0000FF;">GetAxisRaw</span><span style="color: #008000;">(</span><span style="color: #666666;">"Vertical"</span><span style="color: #008000;">)</span><span style="color: #008000;">;</span><br>
+&nbsp; &nbsp; GetComponent<span style="color: #008000;">&lt;</span>Rigidbody2D<span style="color: #008000;">&gt;</span><span style="color: #008000;">(</span><span style="color: #008000;">)</span><span style="color: #008000;">.</span><span style="color: #0000FF;">velocity</span> <span style="color: #008000;">=</span> <span style="color: #008000;">new</span> Vector2<span style="color: #008000;">(</span>h, v<span style="color: #008000;">)</span> <span style="color: #008000;">*</span> speed<span style="color: #008000;">;</span><br>
+<span style="color: #008000;">}</span></span></code></pre><br>
+<em>Note: we used <strong>GetComponent</strong> to access Bomberman's <strong>Rigidbody2D</strong> component. We then create a new Vector2 by using the horizontal and vertical Input values. Afterwards we assign the velocity to the previously created Vector2 multiplied by the movement speed. Simple as that!</em><p></p>
+
+<p>Almost done. Now we will set our animation parameters to the current movement direction:<br>
+</p><pre class="highlight csharp" style="white-space: nowrap"><code><span class="csharp"><span style="color: #6666cc; font-weight: bold;">void</span> FixedUpdate <span style="color: #008000;">(</span><span style="color: #008000;">)</span> <span style="color: #008000;">{</span><br>
+&nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// Check Input Axes, then use velocity</span><br>
+&nbsp; &nbsp; <span style="color: #6666cc; font-weight: bold;">float</span> h <span style="color: #008000;">=</span> Input<span style="color: #008000;">.</span><span style="color: #0000FF;">GetAxisRaw</span><span style="color: #008000;">(</span><span style="color: #666666;">"Horizontal"</span><span style="color: #008000;">)</span><span style="color: #008000;">;</span><br>
+&nbsp; &nbsp; <span style="color: #6666cc; font-weight: bold;">float</span> v <span style="color: #008000;">=</span> Input<span style="color: #008000;">.</span><span style="color: #0000FF;">GetAxisRaw</span><span style="color: #008000;">(</span><span style="color: #666666;">"Vertical"</span><span style="color: #008000;">)</span><span style="color: #008000;">;</span><br>
+&nbsp; &nbsp; GetComponent<span style="color: #008000;">&lt;</span>Rigidbody2D<span style="color: #008000;">&gt;</span><span style="color: #008000;">(</span><span style="color: #008000;">)</span><span style="color: #008000;">.</span><span style="color: #0000FF;">velocity</span> <span style="color: #008000;">=</span> <span style="color: #008000;">new</span> Vector2<span style="color: #008000;">(</span>h, v<span style="color: #008000;">)</span> <span style="color: #008000;">*</span> speed<span style="color: #008000;">;</span><br>
+&nbsp; &nbsp; <br>
+&nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// Set Animation Parameters</span><br>
+&nbsp; &nbsp; GetComponent<span style="color: #008000;">&lt;</span>Animator<span style="color: #008000;">&gt;</span><span style="color: #008000;">(</span><span style="color: #008000;">)</span><span style="color: #008000;">.</span><span style="color: #0000FF;">SetInteger</span><span style="color: #008000;">(</span><span style="color: #666666;">"X"</span>, <span style="color: #008000;">(</span><span style="color: #6666cc; font-weight: bold;">int</span><span style="color: #008000;">)</span>h<span style="color: #008000;">)</span><span style="color: #008000;">;</span><br>
+&nbsp; &nbsp; GetComponent<span style="color: #008000;">&lt;</span>Animator<span style="color: #008000;">&gt;</span><span style="color: #008000;">(</span><span style="color: #008000;">)</span><span style="color: #008000;">.</span><span style="color: #0000FF;">SetInteger</span><span style="color: #008000;">(</span><span style="color: #666666;">"Y"</span>, <span style="color: #008000;">(</span><span style="color: #6666cc; font-weight: bold;">int</span><span style="color: #008000;">)</span>v<span style="color: #008000;">)</span><span style="color: #008000;">;</span><br>
+<span style="color: #008000;">}</span></span></code></pre><br>
+<em>Note: using <strong>(int)</strong> converts the floating point variables to integer.</em><p></p>
+
+<p>If we save the Script and press <strong>Play</strong> then we can now move around and see the proper animations:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/bomberman_moving.gif" title="bomberman_moving" alt="Bomberman moving around"></p>
+
+<h2>The Bomb</h2>
+
+<h3>Creating the Bomb Texture</h3>
+
+<p>Let's give Bomberman the ability to plant bombs. At first we will create another image with 32 x 32 px slices that contain the Bomb animation. This time we will only need one animation, so we won't have to worry about state machines.</p>
+
+<p>We created the following image for our bomb:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/bomb.png" title="bomb" alt="Bomberman Bomb Animation"><br>
+<em>Note: right click on the image, select <strong>Save As...</strong> and save it in the project's <strong>Assets/Sprites</strong> folder.</em></p>
+
+<p>We will use the following <strong>Import Settings</strong> for it:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/bomb_importsettings.png" title="bomb_importsettings" alt="Bomb Import Settings"></p>
+
+<p>We will also open the <strong>Sprite Editor</strong> to slice it with a 32 x 32 px Grid again:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/bomb_slice_settings.png" title="bomb_slice_settings" alt="Bomb Slice Settings"></p>
+
+<h3>Creating the Bomb Animation</h3>
+
+<p>Unity created 4 slices for our Bomb. Let's select all of them and drag them into the <strong>Scene</strong> to create the animation:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/bomb_into_scene.png" title="bomb_into_scene" alt="Drag Bomb into Scene"></p>
+
+<p>We will save it as <strong>Bomb.anim</strong> in a new <strong>BombAnimation</strong> folder. Afterwards we can select the <strong>bomb_0</strong> file from our <strong>BombAnimation</strong> folder, select the <strong>Bomb</strong> state and then set its <strong>Speed</strong> to <strong>0.5</strong>:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/bomb_animation_speed.png" title="bomb_animation_speed" alt="Bomb State speed"></p>
+
+<p>Here is how the animation looks if we press <strong>Play</strong>:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/bomb_animation.gif" title="bomb_animation" alt="Bomb Animation"></p>
+
+<p>To keep things clean, we will rename the <strong>bomb_0</strong> GameObject in the <strong>Hierarchy</strong> <em>(right click it and select Rename, or press F2)</em> to <strong>Bomb</strong>.</p>
+
+<p>We don't want the Bomb to be in the Scene all the time, so let's save the whole GameObject so that we can use it later <em>(also known as <a href="http://noobtuts.com/unity/prefabs">Prefabs</a>)</em>. To create a Prefab, all we have to do is drag the Bomb GameObject from the <strong>Hierarchy</strong> into a new <strong>Prefabs</strong> folder in our <strong>Project Area</strong>:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/bomb_create_prefab.png" title="bomb_create_prefab" alt="Create Bomb Prefab"></p>
+
+<p>We can then delete the Bomb from the <strong>Hierarchy</strong> because we don't need it in there just yet.</p>
+
+<h3>Creating the Bomb Drop Script</h3>
+
+<p>Let's create a little Script that allows Bomberman to drop a Bomb when pressing Space. We will select the <strong>Bomberman</strong> GameObject in the <strong>Hierarchy</strong> and then click on <strong>Add Component</strong>-&gt;<strong>New Script</strong> in the <strong>Inspector</strong>. Let's name it <strong>BombDrop</strong> and select <strong>CSharp</strong> as the language. Afterwards we can move it into our <strong>Scripts</strong> folder again and then open it:<br>
+</p><pre class="highlight csharp" style="white-space: nowrap"><code><span class="csharp"><span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">UnityEngine</span><span style="color: #008000;">;</span><br>
+<span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">System.Collections</span><span style="color: #008000;">;</span><br>
+<br>
+<span style="color: #0600FF; font-weight: bold;">public</span> <span style="color: #6666cc; font-weight: bold;">class</span> BombDrop <span style="color: #008000;">:</span> MonoBehaviour <span style="color: #008000;">{</span><br>
+<br>
+&nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// Use this for initialization</span><br>
+&nbsp; &nbsp; <span style="color: #6666cc; font-weight: bold;">void</span> Start <span style="color: #008000;">(</span><span style="color: #008000;">)</span> <span style="color: #008000;">{</span><br>
+&nbsp; &nbsp; <br>
+&nbsp; &nbsp; <span style="color: #008000;">}</span><br>
+&nbsp; &nbsp; <br>
+&nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// Update is called once per frame</span><br>
+&nbsp; &nbsp; <span style="color: #6666cc; font-weight: bold;">void</span> Update <span style="color: #008000;">(</span><span style="color: #008000;">)</span> <span style="color: #008000;">{</span><br>
+&nbsp; &nbsp; <br>
+&nbsp; &nbsp; <span style="color: #008000;">}</span><br>
+<span style="color: #008000;">}</span></span></code></pre><p></p>
+
+<p>We won't need the <strong>Start</strong> function, so lets' remove it:<br>
+</p><pre class="highlight csharp" style="white-space: nowrap"><code><span class="csharp"><span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">UnityEngine</span><span style="color: #008000;">;</span><br>
+<span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">System.Collections</span><span style="color: #008000;">;</span><br>
+<br>
+<span style="color: #0600FF; font-weight: bold;">public</span> <span style="color: #6666cc; font-weight: bold;">class</span> BombDrop <span style="color: #008000;">:</span> MonoBehaviour <span style="color: #008000;">{</span><br>
+&nbsp; &nbsp; <br>
+&nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// Update is called once per frame</span><br>
+&nbsp; &nbsp; <span style="color: #6666cc; font-weight: bold;">void</span> Update <span style="color: #008000;">(</span><span style="color: #008000;">)</span> <span style="color: #008000;">{</span><br>
+&nbsp; &nbsp; <br>
+&nbsp; &nbsp; <span style="color: #008000;">}</span><br>
+<span style="color: #008000;">}</span></span></code></pre><p></p>
+
+<p>All we need is a public <strong>GameObject</strong> variable so that we can drag our Prefab into it later, then we need to watch for the Space key being pressed and if so then we <strong>Instantiate</strong> the Bomb Prefab <em>(or in other words, we load it into the game world)</em>:<br>
+</p><pre class="highlight csharp" style="white-space: nowrap"><code><span class="csharp"><span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">UnityEngine</span><span style="color: #008000;">;</span><br>
+<span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">System.Collections</span><span style="color: #008000;">;</span><br>
+<br>
+<span style="color: #0600FF; font-weight: bold;">public</span> <span style="color: #6666cc; font-weight: bold;">class</span> BombDrop <span style="color: #008000;">:</span> MonoBehaviour <span style="color: #008000;">{</span><br>
+&nbsp; &nbsp; <span style="color: #0600FF; font-weight: bold;">public</span> GameObject bombPrefab<span style="color: #008000;">;</span><br>
+&nbsp; &nbsp; <br>
+&nbsp; &nbsp; <span style="color: #6666cc; font-weight: bold;">void</span> Update <span style="color: #008000;">(</span><span style="color: #008000;">)</span> <span style="color: #008000;">{</span><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #0600FF; font-weight: bold;">if</span> <span style="color: #008000;">(</span>Input<span style="color: #008000;">.</span><span style="color: #0000FF;">GetKeyDown</span><span style="color: #008000;">(</span>KeyCode<span style="color: #008000;">.</span><span style="color: #0000FF;">Space</span><span style="color: #008000;">)</span><span style="color: #008000;">)</span> <span style="color: #008000;">{</span><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Vector2 pos <span style="color: #008000;">=</span> transform<span style="color: #008000;">.</span><span style="color: #0000FF;">position</span><span style="color: #008000;">;</span><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; pos<span style="color: #008000;">.</span><span style="color: #0000FF;">x</span> <span style="color: #008000;">=</span> Mathf<span style="color: #008000;">.</span><span style="color: #0000FF;">Round</span><span style="color: #008000;">(</span>pos<span style="color: #008000;">.</span><span style="color: #0000FF;">x</span><span style="color: #008000;">)</span><span style="color: #008000;">;</span><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; pos<span style="color: #008000;">.</span><span style="color: #0000FF;">y</span> <span style="color: #008000;">=</span> Mathf<span style="color: #008000;">.</span><span style="color: #0000FF;">Round</span><span style="color: #008000;">(</span>pos<span style="color: #008000;">.</span><span style="color: #0000FF;">y</span><span style="color: #008000;">)</span><span style="color: #008000;">;</span><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Instantiate<span style="color: #008000;">(</span>bombPrefab, pos, Quaternion<span style="color: #008000;">.</span><span style="color: #0000FF;">identity</span><span style="color: #008000;">)</span><span style="color: #008000;">;</span><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #008000;">}</span><br>
+&nbsp; &nbsp; <span style="color: #008000;">}</span><br>
+<span style="color: #008000;">}</span></span></code></pre><br>
+<em>Note: At first we get Bomberman's current position and then we round it to make sure that the Bombs are always at positions like <strong>(2, 3)</strong> and never at <strong>(2.003, 2.999)</strong>. Afterwards we use the <strong>Instantiate</strong> function to load the Bomb Prefab into the game world. Quaternion.identity means 'spawn it with the default rotation'.</em><p></p>
+
+<p>After saving the Script we can select Bomberman again and then take another look at the <strong>Inspector</strong>. Now we can drag the <strong>Bomb</strong> Prefab from our <strong>Prefabs</strong> folder into the Script's <strong>Bomb Prefab</strong> slot:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/bombdrop_script_inspector.png" title="bombdrop_script_inspector" alt="Bombdrop Script in Inspector"></p>
+
+<p>If we press Play then we can now drop Bombs by pressing Space:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/bomb_ingame.gif" title="bomb_ingame" alt="Bomb in-game"></p>
+
+<h3>Making the Bomb explode</h3>
+
+<p>So far our bomb will stay in the game forever, so let's change that by making it explode after a few seconds. We will select the <strong>Bomb</strong> Prefab in our Prefabs folder and then click on <strong>Add Component</strong>-&gt;<strong>New Script</strong> in the <strong>Inspector</strong>. We will name it <strong>DestroyAfter</strong>, select <strong>CSharp</strong> as the language and then move it into our Scripts folder again. Afterwards we can open it:<br>
+</p><pre class="highlight csharp" style="white-space: nowrap"><code><span class="csharp"><span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">UnityEngine</span><span style="color: #008000;">;</span><br>
+<span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">System.Collections</span><span style="color: #008000;">;</span><br>
+<br>
+<span style="color: #0600FF; font-weight: bold;">public</span> <span style="color: #6666cc; font-weight: bold;">class</span> DestroyAfter <span style="color: #008000;">:</span> MonoBehaviour <span style="color: #008000;">{</span><br>
+<br>
+&nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// Use this for initialization</span><br>
+&nbsp; &nbsp; <span style="color: #6666cc; font-weight: bold;">void</span> Start <span style="color: #008000;">(</span><span style="color: #008000;">)</span> <span style="color: #008000;">{</span><br>
+&nbsp; &nbsp; <br>
+&nbsp; &nbsp; <span style="color: #008000;">}</span><br>
+&nbsp; &nbsp; <br>
+&nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// Update is called once per frame</span><br>
+&nbsp; &nbsp; <span style="color: #6666cc; font-weight: bold;">void</span> Update <span style="color: #008000;">(</span><span style="color: #008000;">)</span> <span style="color: #008000;">{</span><br>
+&nbsp; &nbsp; <br>
+&nbsp; &nbsp; <span style="color: #008000;">}</span><br>
+<span style="color: #008000;">}</span></span></code></pre><p></p>
+
+<p>We can remove the <strong>Update</strong> function because we won't need it:<br>
+</p><pre class="highlight csharp" style="white-space: nowrap"><code><span class="csharp"><span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">UnityEngine</span><span style="color: #008000;">;</span><br>
+<span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">System.Collections</span><span style="color: #008000;">;</span><br>
+<br>
+<span style="color: #0600FF; font-weight: bold;">public</span> <span style="color: #6666cc; font-weight: bold;">class</span> DestroyAfter <span style="color: #008000;">:</span> MonoBehaviour <span style="color: #008000;">{</span><br>
+<br>
+&nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// Use this for initialization</span><br>
+&nbsp; &nbsp; <span style="color: #6666cc; font-weight: bold;">void</span> Start <span style="color: #008000;">(</span><span style="color: #008000;">)</span> <span style="color: #008000;">{</span><br>
+&nbsp; &nbsp; <br>
+&nbsp; &nbsp; <span style="color: #008000;">}</span><br>
+<span style="color: #008000;">}</span></span></code></pre><p></p>
+
+<p>Let's add a <strong>time</strong> variable that defines how long it takes for the Bomb to explode. Afterwards we will use the <strong>Destroy</strong> function to destroy the Bomb after "<strong>time</strong>" seconds:<br>
+</p><pre class="highlight csharp" style="white-space: nowrap"><code><span class="csharp"><span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">UnityEngine</span><span style="color: #008000;">;</span><br>
+<span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">System.Collections</span><span style="color: #008000;">;</span><br>
+<br>
+<span style="color: #0600FF; font-weight: bold;">public</span> <span style="color: #6666cc; font-weight: bold;">class</span> DestroyAfter <span style="color: #008000;">:</span> MonoBehaviour <span style="color: #008000;">{</span><br>
+&nbsp; &nbsp; <span style="color: #0600FF; font-weight: bold;">public</span> <span style="color: #6666cc; font-weight: bold;">float</span> time <span style="color: #008000;">=</span> <span style="color: #FF0000;">3</span><span style="color: #008000;">;</span><br>
+<br>
+&nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// Use this for initialization</span><br>
+&nbsp; &nbsp; <span style="color: #6666cc; font-weight: bold;">void</span> Start <span style="color: #008000;">(</span><span style="color: #008000;">)</span> <span style="color: #008000;">{</span><br>
+&nbsp; &nbsp; &nbsp; &nbsp; Destroy<span style="color: #008000;">(</span>gameObject, time<span style="color: #008000;">)</span><span style="color: #008000;">;</span><br>
+&nbsp; &nbsp; <span style="color: #008000;">}</span><br>
+<span style="color: #008000;">}</span></span></code></pre><p></p>
+
+<p>Alright so if we press <strong>Play</strong> then we can see how the Bombs automatically disappear after 3 seconds. We named our Script <strong>DestroyAfter</strong> instead of <strong>Bomb</strong> because this way we can reuse it for the Explosion later on.</p>
+
+<p>Now it's time to add another Script that loads the explosion into the game as soon as the Bomb was destroyed. Let's select the <strong>Bomb</strong> Prefab and then click <strong>Add Component</strong>-&gt;<strong>New Script</strong> in the <strong>Inspector</strong>, name it <strong>Bomb</strong> and select <strong>CSharp</strong> as the language. As usual we will move it into our <strong>Scripts</strong> folder and then open it. We can remove the <strong>Start</strong> and the <strong>Update</strong> functions and add the <strong>OnDestroy</strong> function instead:<br>
+</p><pre class="highlight csharp" style="white-space: nowrap"><code><span class="csharp"><span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">UnityEngine</span><span style="color: #008000;">;</span><br>
+<span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">System.Collections</span><span style="color: #008000;">;</span><br>
+<br>
+<span style="color: #0600FF; font-weight: bold;">public</span> <span style="color: #6666cc; font-weight: bold;">class</span> Bomb <span style="color: #008000;">:</span> MonoBehaviour <span style="color: #008000;">{</span><br>
+<br>
+&nbsp; &nbsp; <span style="color: #6666cc; font-weight: bold;">void</span> OnDestroy<span style="color: #008000;">(</span><span style="color: #008000;">)</span> <span style="color: #008000;">{</span><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <br>
+&nbsp; &nbsp; <span style="color: #008000;">}</span><br>
+<span style="color: #008000;">}</span></span></code></pre><p></p>
+
+<p>The <strong>OnDestroy</strong> function will be automatically called by Unity as soon as the Bomb is destroyed <em>(which it will after a few seconds because of the DestroyAfter Script)</em>. Now we will simply use this function to instantiate the explosion, which will be another Prefab very soon:<br>
+</p><pre class="highlight csharp" style="white-space: nowrap"><code><span class="csharp"><span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">UnityEngine</span><span style="color: #008000;">;</span><br>
+<span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">System.Collections</span><span style="color: #008000;">;</span><br>
+<br>
+<span style="color: #0600FF; font-weight: bold;">public</span> <span style="color: #6666cc; font-weight: bold;">class</span> Bomb <span style="color: #008000;">:</span> MonoBehaviour <span style="color: #008000;">{</span><br>
+&nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// Explosion Prefab</span><br>
+&nbsp; &nbsp; <span style="color: #0600FF; font-weight: bold;">public</span> GameObject explosionPrefab<span style="color: #008000;">;</span><br>
+<br>
+&nbsp; &nbsp; <span style="color: #6666cc; font-weight: bold;">void</span> OnDestroy<span style="color: #008000;">(</span><span style="color: #008000;">)</span> <span style="color: #008000;">{</span><br>
+&nbsp; &nbsp; &nbsp; &nbsp; Instantiate<span style="color: #008000;">(</span>explosionPrefab, transform<span style="color: #008000;">.</span><span style="color: #0000FF;">position</span>, Quaternion<span style="color: #008000;">.</span><span style="color: #0000FF;">identity</span><span style="color: #008000;">)</span><span style="color: #008000;">;</span><br>
+&nbsp; &nbsp; <span style="color: #008000;">}</span><br>
+<span style="color: #008000;">}</span></span></code></pre><p></p>
+
+<p>Simple as that. Now we just have to create the Explosion Prefab.</p>
+
+<h2>The Explosion</h2>
+
+<p>We want to have an explosion effect around the bomb. Or to be more exact, at the top, bottom, left and right and center of the bomb. The fire effect should also be animated to give a nice feeling to it.</p>
+
+<p>We will use the following texture for our animated explosion:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/explosion.png" title="explosion" alt="Bomberman Explosion Animation"><br>
+<em>Note: right click on the image, select <strong>Save As...</strong> and save it in the project's <strong>Assets/Sprites</strong> folder.</em></p>
+
+<p>We will use the following <strong>Import Settings</strong> for it:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/explosion_importsettings.png" title="explosion_importsettings" alt="Explosion Import Settings"></p>
+
+<p>Afterwards we can slice it as a 96 x 96 px grid in the <strong>Sprite Editor</strong>:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/explosion_slice_settings.png" title="explosion_slice_settings" alt="Explosion Slice Settings"><br>
+<em>Note: we didn't use <strong>32 x 32</strong> this time because the Explosion actually covers 3 units horizontally and vertically. And 32 x 32 multiplied by 3 equals <strong>96 x 96</strong>.</em></p>
+
+<p>To create the animation we will select all the slices and drag them into the <strong>Scene</strong>:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/explosion_to_scene.png" title="explosion_to_scene" alt="Drag Explosion into Scene"></p>
+
+<p>We will save the animation as <strong>Explosion.anim</strong> in a new <strong>ExplosionAnimation</strong> folder.</p>
+
+<p>Afterwards we can open the <strong>explosion_0</strong> file from the same folder, select the <strong>Explosion</strong> state and change the <strong>Speed</strong> to something slow like <strong>0.15</strong>:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/explosion_animation_speed.png" title="explosion_animation_speed" alt="Explosion Animation Speed"></p>
+
+<p>Let's also rename the <strong>explosion_0</strong> GameObject in the <strong>Hierarchy</strong> to <strong>Explosion</strong>, just to keep things clean.</p>
+
+<p>Just like we did with the Bomb, we don't want the Explosion to be in the game all the time. So let's drag it from the <strong>Hierarchy</strong> into our <strong>Prefabs</strong> folder:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/explosion_create_prefab.png" title="explosion_create_prefab" alt="Create Explosion Prefab"></p>
+
+<p>Afterwards we can delete it from the <strong>Hierarchy</strong> again.</p>
+
+<p>We also want the Explosion effect to disappear from the Game after a few seconds, so let's select the <strong>Explosion</strong> Prefab in our <strong>Project Area</strong> and then click on <strong>Add Component</strong>-&gt;<strong>Scripts</strong>-&gt;<strong>Destroy After</strong> in the <strong>Inspector</strong>. We will destroy it after 2 seconds:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/explosion_destroyafter.png" title="explosion_destroyafter" alt="Explosion with DestroyAfter Script"><br>
+<em>Note: this is the beauty of component based development. We can reuse Scripts over and over again for all kinds of different GameObjects.</em></p>
+
+<p>There is one more adjustment to be made here. We want to make sure that the explosion is never drawn on top of the undestroyable blocks. Instead we want it to be drawn behind them so that it seems like it's not touching them at all. What sounds complicated is very easy, all we have to do is set the <strong>Order in Layer</strong> property to something smaller than <strong>0</strong>:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/explosion_order_in_layer.png" title="explosion_order_in_layer" alt="Explosion Order in Layer"></p>
+
+<h3>Spawning the Explosion</h3>
+
+<p>Alright let's select our <strong>Bomb</strong> Prefab in our <strong>Project Area</strong> again and then take a look at the <strong>Inspector</strong>. We will drag our <strong>Explosion</strong> Prefab into the Bomb Script's <strong>Explosion Prefab</strong> slot in order to make it spawn the explosion:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/bomb_with_explosion.png" title="bomb_with_explosion" alt="Bomb Script with Explosion Prefab"></p>
+
+<p>If we press <strong>Play</strong> and drop a Bomb then we can see our Explosion effect:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/explosion_onlyeffect.gif" title="explosion_onlyeffect" alt="Explosion Effect only"></p>
+
+<h3>Destruction</h3>
+
+<p>So far our Explosion is really just a visual effect. Now it's time to make sure that the Explosion also destroys everything that it touches, except for the undestroyable blocks of course.</p>
+
+<p>There are all kinds of ways to do this, and as usual we will choose the easiest one. We will add Triggers to our explosion and then use the <a href="http://docs.unity3d.com/ScriptReference/MonoBehaviour.OnTriggerEnter2D.html">OnTriggerEnter2D</a> function to find out what it touches.</p>
+
+<p>Let's select our <strong>Explosion</strong> Prefab from our Prefabs folder and then select <strong>Add Component</strong>-&gt;<strong>Physics 2D</strong>-&gt;<strong>Box Collider 2D</strong> in the <strong>Inspector</strong> twice. We will use the following settings for the two colliders:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/explosion_colliders.png" title="explosion_colliders" alt="Explosion Colliders"></p>
+
+<p>We enabled the <strong>Is Trigger</strong> option to make sure that we only receive collision information instead of actually colliding with things. We then adjusted the <strong>Size</strong> so that one collider covers the explosion horizontally and one covers it vertically:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/explosion_colliders_inscene.png" title="explosion_colliders_inscene" alt="Explosion Colliders in Scene"></p>
+
+<p>We will also select <strong>Add Component</strong>-&gt;<strong>Physics 2D</strong>-&gt;<strong>Rigidbody 2D</strong> and use the following settings:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/explosion_rigidbody.png" title="explosion_rigidbody" alt="Explosion Rigidbody"><br>
+<em>Note: it's really important that we enable <strong>Is Kinematic</strong> here. This way the Rigidbody doesn't really influence our explosion, it pretty much only makes sure that we receive collision information when colliding with blocks that don't have a Rigidbody. This is necessary because in Unity, at least one of the colliding GameObjects needs a Rigidbody in order to receive collision information.</em></p>
+
+<p>Alright, now we can create a Script that uses the OnTriggerEnter2D function to find out what the explosion touches. Let's select <strong>Add Component</strong>-&gt;<strong>New Script</strong> in the <strong>Inspector</strong>, name it <strong>Explosion</strong>, select <strong>CSharp</strong> as the language, move it into our <strong>Scripts</strong> folder and then open it:<br>
+</p><pre class="highlight csharp" style="white-space: nowrap"><code><span class="csharp"><span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">UnityEngine</span><span style="color: #008000;">;</span><br>
+<span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">System.Collections</span><span style="color: #008000;">;</span><br>
+<br>
+<span style="color: #0600FF; font-weight: bold;">public</span> <span style="color: #6666cc; font-weight: bold;">class</span> Explosion <span style="color: #008000;">:</span> MonoBehaviour <span style="color: #008000;">{</span><br>
+<br>
+&nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// Use this for initialization</span><br>
+&nbsp; &nbsp; <span style="color: #6666cc; font-weight: bold;">void</span> Start <span style="color: #008000;">(</span><span style="color: #008000;">)</span> <span style="color: #008000;">{</span><br>
+&nbsp; &nbsp; <br>
+&nbsp; &nbsp; <span style="color: #008000;">}</span><br>
+&nbsp; &nbsp; <br>
+&nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// Update is called once per frame</span><br>
+&nbsp; &nbsp; <span style="color: #6666cc; font-weight: bold;">void</span> Update <span style="color: #008000;">(</span><span style="color: #008000;">)</span> <span style="color: #008000;">{</span><br>
+&nbsp; &nbsp; <br>
+&nbsp; &nbsp; <span style="color: #008000;">}</span><br>
+<span style="color: #008000;">}</span></span></code></pre><p></p>
+
+<p>We won't need the <strong>Start</strong> or the <strong>Update</strong> function, so let's remove them. Instead we will use the <strong>OnTriggerEnter2D</strong> function, which will be automatically called by Unity whenever something enters the Explosion's trigger:<br>
+</p><pre class="highlight csharp" style="white-space: nowrap"><code><span class="csharp"><span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">UnityEngine</span><span style="color: #008000;">;</span><br>
+<span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">System.Collections</span><span style="color: #008000;">;</span><br>
+<br>
+<span style="color: #0600FF; font-weight: bold;">public</span> <span style="color: #6666cc; font-weight: bold;">class</span> Explosion <span style="color: #008000;">:</span> MonoBehaviour <span style="color: #008000;">{</span><br>
+<br>
+&nbsp; &nbsp; <span style="color: #6666cc; font-weight: bold;">void</span> OnTriggerEnter2D<span style="color: #008000;">(</span>Collider2D co<span style="color: #008000;">)</span> <span style="color: #008000;">{</span><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// Do Stuff...</span><br>
+&nbsp; &nbsp; <span style="color: #008000;">}</span><br>
+<span style="color: #008000;">}</span></span></code></pre><p></p>
+
+<p>Alright, we want to destroy everything that it touches, except for those undestroyable blocks that we made static:<br>
+</p><pre class="highlight csharp" style="white-space: nowrap"><code><span class="csharp"><span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">UnityEngine</span><span style="color: #008000;">;</span><br>
+<span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">System.Collections</span><span style="color: #008000;">;</span><br>
+<br>
+<span style="color: #0600FF; font-weight: bold;">public</span> <span style="color: #6666cc; font-weight: bold;">class</span> Explosion <span style="color: #008000;">:</span> MonoBehaviour <span style="color: #008000;">{</span><br>
+<br>
+&nbsp; &nbsp; <span style="color: #6666cc; font-weight: bold;">void</span> OnTriggerEnter2D<span style="color: #008000;">(</span>Collider2D co<span style="color: #008000;">)</span> <span style="color: #008000;">{</span><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #0600FF; font-weight: bold;">if</span> <span style="color: #008000;">(</span><span style="color: #008000;">!</span>co<span style="color: #008000;">.</span><span style="color: #0000FF;">gameObject</span><span style="color: #008000;">.</span><span style="color: #0000FF;">isStatic</span><span style="color: #008000;">)</span><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Destroy<span style="color: #008000;">(</span>co<span style="color: #008000;">.</span><span style="color: #0000FF;">gameObject</span><span style="color: #008000;">)</span><span style="color: #008000;">;</span><br>
+&nbsp; &nbsp; <span style="color: #008000;">}</span><br>
+<span style="color: #008000;">}</span></span></code></pre><p></p>
+
+<p>If we save the Script and press <strong>Play</strong> then we can now destroy things with our bombs:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/bomb_destroys_blocks.gif" title="bomb_destroys_blocks" alt="Bomb Destroys Blocks"></p>
+
+<h2>Creating an Enemy</h2>
+
+<h3>The Worm Texture</h3>
+
+<p>Alright let's add a monster to our game. We will use the following texture for a worm:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/worm.png" title="worm" alt="Worm Texture"><br>
+<em>Note: right click on the image, select <strong>Save As...</strong> and save it in the project's <strong>Assets/Sprites</strong> folder.</em></p>
+
+<p>It contains the same 5 animations that our Bomberman uses: <strong>WalkLeft</strong>, <strong>WalkRight</strong>, <strong>WalkDown</strong>, <strong>WalkUp</strong> and <strong>Idle</strong>.</p>
+
+<p>We will use the following <strong>Import Settings</strong> for it:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/worm_importsettings.png" title="worm_importsettings" alt="Worm Import Settings"></p>
+
+<p>Afterwards we can open the <strong>Sprite Editor</strong> and then slice it as a 32 x 32 px Grid:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/worm_slice_settings.png" title="worm_slice_settings" alt="Worm Slice Settings"></p>
+
+<h3>The Worm Animations</h3>
+
+<p>Let's create a new <strong>WormAnimation</strong> folder in our <strong>Project Area</strong> and then select the following slices to drag into the Scene:</p>
+
+<ul>
+<li><strong>worm_0, 1, 2</strong> for <strong>WalkLeft</strong></li>
+<li><strong>worm_3, 4, 5</strong> for <strong>WalkRight</strong></li>
+<li><strong>worm_6, 7, 8</strong> for <strong>WalkDown</strong></li>
+<li><strong>worm_9, 10, 11</strong> for <strong>WalkUp</strong></li>
+<li><strong>worm_12, 13</strong> for <strong>Idle</strong></li>
+</ul>
+
+<p>Let's clean up after Unity again. At first we will delete the unnecessary controllers in the <strong>WormAnimaton</strong> folder. Here is how it looks afterwards:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/wormanimation_folder.png" title="wormanimation_folder" alt="WormAnimation Folder"></p>
+
+<p>We will also clean up the <strong>Hierarchy</strong> so that only the <strong>worm_0</strong> GameObject remains:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/worm_in_hierarchy.png" title="worm_in_hierarchy" alt="Worm in Hierarchy"></p>
+
+<p>We can also rename it to "<strong>Worm</strong>" in order to keep things clean.</p>
+
+<p>Afterwards we can open the <strong>worm_0</strong> controller in our <strong>WormAnimation</strong> folder. We will create the exact same state machine that we created for Bomberman <em>(just this time with the worm's animations)</em>:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/worm_animator_alltransitions.png" title="worm_animator_alltransitions" alt="Worm Animation with all Transitions"></p>
+
+<h3>Worm Physics</h3>
+
+<p>Our Worm shouldn't be allowed to walk through walls, so let's select it in the <strong>Hierarchy</strong>, take a look in the <strong>Inspector</strong> and click on <strong>Add Compoment</strong>-&gt;<strong>Physics 2D</strong> and then add a <strong>Box Collider 2D</strong> and a <strong>Rigidbody 2D</strong> with the following properties:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/worm_boxcollider_and_rigidbody.png" title="worm_boxcollider_and_rigidbody" alt="Worm BoxCollider2D and Rigidbody2D"></p>
+
+<h3>Worm Movement</h3>
+
+<p>Let's make the Worm move randomly to give the illusion of some AI. We will begin by putting the worm to a valid default position that is not inside a wall:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/worm_defaultposition.png" title="worm_defaultposition" alt="Worm Default Position"></p>
+
+<p>Afterwards we will select <strong>Add Component</strong>-&gt;<strong>New Script</strong>, name it <strong>Worm</strong>, select <strong>CSharp</strong> as the language, move it into our <strong>Scripts</strong> folder and then open it:<br>
+</p><pre class="highlight csharp" style="white-space: nowrap"><code><span class="csharp"><span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">UnityEngine</span><span style="color: #008000;">;</span><br>
+<span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">System.Collections</span><span style="color: #008000;">;</span><br>
+<br>
+<span style="color: #0600FF; font-weight: bold;">public</span> <span style="color: #6666cc; font-weight: bold;">class</span> Worm <span style="color: #008000;">:</span> MonoBehaviour <span style="color: #008000;">{</span><br>
+<br>
+&nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// Use this for initialization</span><br>
+&nbsp; &nbsp; <span style="color: #6666cc; font-weight: bold;">void</span> Start <span style="color: #008000;">(</span><span style="color: #008000;">)</span> <span style="color: #008000;">{</span><br>
+&nbsp; &nbsp; <br>
+&nbsp; &nbsp; <span style="color: #008000;">}</span><br>
+&nbsp; &nbsp; <br>
+&nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// Update is called once per frame</span><br>
+&nbsp; &nbsp; <span style="color: #6666cc; font-weight: bold;">void</span> Update <span style="color: #008000;">(</span><span style="color: #008000;">)</span> <span style="color: #008000;">{</span><br>
+&nbsp; &nbsp; <br>
+&nbsp; &nbsp; <span style="color: #008000;">}</span><br>
+<span style="color: #008000;">}</span></span></code></pre><p></p>
+
+<p>We won't need the <strong>Update</strong> function, so let's remove it:<br>
+</p><pre class="highlight csharp" style="white-space: nowrap"><code><span class="csharp"><span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">UnityEngine</span><span style="color: #008000;">;</span><br>
+<span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">System.Collections</span><span style="color: #008000;">;</span><br>
+<br>
+<span style="color: #0600FF; font-weight: bold;">public</span> <span style="color: #6666cc; font-weight: bold;">class</span> Worm <span style="color: #008000;">:</span> MonoBehaviour <span style="color: #008000;">{</span><br>
+<br>
+&nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// Use this for initialization</span><br>
+&nbsp; &nbsp; <span style="color: #6666cc; font-weight: bold;">void</span> Start <span style="color: #008000;">(</span><span style="color: #008000;">)</span> <span style="color: #008000;">{</span><br>
+&nbsp; &nbsp; <br>
+&nbsp; &nbsp; <span style="color: #008000;">}</span><br>
+<span style="color: #008000;">}</span></span></code></pre><p></p>
+
+<p>Let's add a movement <strong>speed</strong> variable so that we can control how fast the worm will be moving:<br>
+</p><pre class="highlight csharp" style="white-space: nowrap"><code><span class="csharp"><span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">UnityEngine</span><span style="color: #008000;">;</span><br>
+<span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">System.Collections</span><span style="color: #008000;">;</span><br>
+<br>
+<span style="color: #0600FF; font-weight: bold;">public</span> <span style="color: #6666cc; font-weight: bold;">class</span> Worm <span style="color: #008000;">:</span> MonoBehaviour <span style="color: #008000;">{</span><br>
+&nbsp; &nbsp; <span style="color: #0600FF; font-weight: bold;">public</span> <span style="color: #6666cc; font-weight: bold;">float</span> speed <span style="color: #008000;">=</span> <span style="color: #FF0000;">2</span><span style="color: #008000;">;</span><br>
+<br>
+&nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// Use this for initialization</span><br>
+&nbsp; &nbsp; <span style="color: #6666cc; font-weight: bold;">void</span> Start <span style="color: #008000;">(</span><span style="color: #008000;">)</span> <span style="color: #008000;">{</span><br>
+&nbsp; &nbsp; <br>
+&nbsp; &nbsp; <span style="color: #008000;">}</span><br>
+<span style="color: #008000;">}</span></span></code></pre><p></p>
+
+<p>We want to move the worm into a random direction, so let's add a <strong>randDir</strong> function:<br>
+</p><pre class="highlight csharp" style="white-space: nowrap"><code><span class="csharp">Vector2 randDir<span style="color: #008000;">(</span><span style="color: #008000;">)</span> <span style="color: #008000;">{</span><br>
+&nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// Set one component to -1/0/1 and one to 0</span><br>
+&nbsp; &nbsp; <span style="color: #6666cc; font-weight: bold;">int</span> r <span style="color: #008000;">=</span> Random<span style="color: #008000;">.</span><span style="color: #0000FF;">Range</span><span style="color: #008000;">(</span><span style="color: #008000;">-</span><span style="color: #FF0000;">1</span>, <span style="color: #FF0000;">2</span><span style="color: #008000;">)</span><span style="color: #008000;">;</span><br>
+&nbsp; &nbsp; <span style="color: #0600FF; font-weight: bold;">return</span> <span style="color: #008000;">(</span>Random<span style="color: #008000;">.</span><span style="color: #0600FF; font-weight: bold;">value</span> <span style="color: #008000;">&lt;</span> <span style="color: #FF0000;">0.5</span><span style="color: #008000;">)</span> <span style="color: #008000;">?</span> <span style="color: #008000;">new</span> Vector2<span style="color: #008000;">(</span>r, <span style="color: #FF0000;">0</span><span style="color: #008000;">)</span> <span style="color: #008000;">:</span> <span style="color: #008000;">new</span> Vector2<span style="color: #008000;">(</span><span style="color: #FF0000;">0</span>, r<span style="color: #008000;">)</span><span style="color: #008000;">;</span><br>
+<span style="color: #008000;">}</span></span></code></pre><br>
+<em>Note: our <strong>randDir</strong> function returns a Vector2 that is either up, down, left, right or zero. This works by first creating the random <strong>r</strong> value that is either -1, 0 or 1. Afterwards we decide if r should be the <strong>x</strong> or <strong>y</strong> component by using <strong>Random.value &lt; 0.5</strong> (which gives it a 50% chance). We can only set the <strong>x</strong> or the <strong>y</strong> component to make sure that it never goes diagonal.</em><p></p>
+
+<p>We will also need a function that finds out if the worm can move into a certain direction. We will use Unity's Linecasting for it:<br>
+</p><pre class="highlight csharp" style="white-space: nowrap"><code><span class="csharp"><span style="color: #6666cc; font-weight: bold;">bool</span> isValidDir<span style="color: #008000;">(</span>Vector2 dir<span style="color: #008000;">)</span> <span style="color: #008000;">{</span> &nbsp; &nbsp; &nbsp; &nbsp;<br>
+&nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// Linecast to find out if anything is between worm and worm+dir</span><br>
+&nbsp; &nbsp; Vector2 pos <span style="color: #008000;">=</span> transform<span style="color: #008000;">.</span><span style="color: #0000FF;">position</span><span style="color: #008000;">;</span><br>
+&nbsp; &nbsp; RaycastHit2D hit <span style="color: #008000;">=</span> Physics2D<span style="color: #008000;">.</span><span style="color: #0000FF;">Linecast</span><span style="color: #008000;">(</span>pos <span style="color: #008000;">+</span> dir, pos<span style="color: #008000;">)</span><span style="color: #008000;">;</span><br>
+&nbsp; &nbsp; <span style="color: #0600FF; font-weight: bold;">return</span> <span style="color: #008000;">(</span>hit<span style="color: #008000;">.</span><span style="color: #0000FF;">collider</span><span style="color: #008000;">.</span><span style="color: #0000FF;">gameObject</span> <span style="color: #008000;">==</span> gameObject<span style="color: #008000;">)</span><span style="color: #008000;">;</span><br>
+<span style="color: #008000;">}</span></span></code></pre><br>
+<em>Note: we simply cast a line from <strong>next to</strong> the worm towards the <strong>worm position</strong>. If the line hits the worm itself then there is nothing in the way, hence we can move there. If the line hits anything else then there must be something in the way.</em><p></p>
+
+<p>Alright so let's create one more function that uses the Rigidbody's <strong>velocity</strong> to make the worm move into a random direction:<br>
+</p><pre class="highlight csharp" style="white-space: nowrap"><code><span class="csharp"><span style="color: #6666cc; font-weight: bold;">void</span> changeDir<span style="color: #008000;">(</span><span style="color: #008000;">)</span> <span style="color: #008000;">{</span><br>
+&nbsp; &nbsp; Vector2 dir <span style="color: #008000;">=</span> randDir<span style="color: #008000;">(</span><span style="color: #008000;">)</span><span style="color: #008000;">;</span><br>
+&nbsp; &nbsp; <span style="color: #0600FF; font-weight: bold;">if</span> <span style="color: #008000;">(</span>isValidDir<span style="color: #008000;">(</span>dir<span style="color: #008000;">)</span><span style="color: #008000;">)</span> <span style="color: #008000;">{</span><br>
+&nbsp; &nbsp; &nbsp; &nbsp; GetComponent<span style="color: #008000;">&lt;</span>Rigidbody2D<span style="color: #008000;">&gt;</span><span style="color: #008000;">(</span><span style="color: #008000;">)</span><span style="color: #008000;">.</span><span style="color: #0000FF;">velocity</span> <span style="color: #008000;">=</span> dir <span style="color: #008000;">*</span> speed<span style="color: #008000;">;</span><br>
+&nbsp; &nbsp; &nbsp; &nbsp; GetComponent<span style="color: #008000;">&lt;</span>Animator<span style="color: #008000;">&gt;</span><span style="color: #008000;">(</span><span style="color: #008000;">)</span><span style="color: #008000;">.</span><span style="color: #0000FF;">SetInteger</span><span style="color: #008000;">(</span><span style="color: #666666;">"X"</span>, <span style="color: #008000;">(</span><span style="color: #6666cc; font-weight: bold;">int</span><span style="color: #008000;">)</span>dir<span style="color: #008000;">.</span><span style="color: #0000FF;">x</span><span style="color: #008000;">)</span><span style="color: #008000;">;</span><br>
+&nbsp; &nbsp; &nbsp; &nbsp; GetComponent<span style="color: #008000;">&lt;</span>Animator<span style="color: #008000;">&gt;</span><span style="color: #008000;">(</span><span style="color: #008000;">)</span><span style="color: #008000;">.</span><span style="color: #0000FF;">SetInteger</span><span style="color: #008000;">(</span><span style="color: #666666;">"Y"</span>, <span style="color: #008000;">(</span><span style="color: #6666cc; font-weight: bold;">int</span><span style="color: #008000;">)</span>dir<span style="color: #008000;">.</span><span style="color: #0000FF;">y</span><span style="color: #008000;">)</span><span style="color: #008000;">;</span><br>
+&nbsp; &nbsp; <span style="color: #008000;">}</span><br>
+<span style="color: #008000;">}</span></span></code></pre><br>
+<em>Note: at first we create a random direction, then we check if the worm can move into that direction. If this is the case then we set the rigidbody's <strong>velocity</strong>. Afterwards we also set the Animator's parameters, just like we did with Bomberman.</em><p></p>
+
+<p>Finally we will use the <a href="http://docs.unity3d.com/ScriptReference/MonoBehaviour.InvokeRepeating.html">InvokeRepeating</a> function to change the current movement direction every 500 milliseconds or so:<br>
+</p><pre class="highlight csharp" style="white-space: nowrap"><code><span class="csharp"><span style="color: #008080; font-style: italic;">// Use this for initialization</span><br>
+<span style="color: #6666cc; font-weight: bold;">void</span> Start <span style="color: #008000;">(</span><span style="color: #008000;">)</span> <span style="color: #008000;">{</span><br>
+&nbsp; &nbsp; InvokeRepeating<span style="color: #008000;">(</span><span style="color: #666666;">"changeDir"</span>, <span style="color: #FF0000;">0</span>, 0<span style="color: #008000;">.</span>5f<span style="color: #008000;">)</span><span style="color: #008000;">;</span><br>
+<span style="color: #008000;">}</span></span></code></pre><p></p>
+
+<h3>Adding more Worms</h3>
+
+<p>Now we can duplicate the Worm in the <strong>Hierarchy</strong> <em>(by selecting it, then right clicking and pressing <strong>Duplicate</strong>)</em> and position it in several places in our game.</p>
+
+<p>If we press <strong>Play</strong> then we can now see moving worms in our Bomberman Game:<br>
+<img src="./noobtuts - Unity 2D Bomberman Game Tutorial_files/bomberman_preview.gif" title="bomberman_preview" alt="Worms in Game"></p>
+
+<h2>Summary</h2>
+
+<p>This was our Unity Bomberman Tutorial. We just created a fun little game with a very solid structure. As usual there are tons of interesting improvements that can be done such as:</p>
+
+<ul>
+<li>Only allowing a certain amount of bombs at the same time</li>
+<li>Making Bomberman vulnerable to explosions</li>
+<li>Making Worms vulnerable to explosions</li>
+<li>Creating a Menu</li>
+<li>Adding more characters for a Multiplayer version</li>
+<li>Hiding Power-ups and doors to other levels behind Blocks</li>
+</ul>
+
+    
+      </article>
+</section>
+
+  <footer>
+    <p>© 2012-2015 <a href="http://noobtuts.com/">noobtuts.com</a></p>
+  </footer>
+
+
+
+</body></html>
